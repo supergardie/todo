@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/public/style.css" />
+    <title><%= pagetitle %></title>
+</head>
+
+<body class="<%= title %>">    
+        
+    <div>
+        <h1><%= title %></h1>
+
+        <form action="/todo" method="post">
+            <input type="text" name="todoItem" />
+            <button type="submit" name="add">ADD</button>
+        </form>
+
+        <form action="/edit" method="post">
+
+            <% if(items.length) { %>
+            <table>
+                <tr>
+                    <th>TO DO</th>
+                    <th>DEL</th>
+                    <th>DONE</th>
+                </tr>
+
+                <% for(var ii = 0; ii < items.length; ii++) { %>
+                <tr>
+                    <td><% if(done[ii]) { %><s><% } %><%= items[ii] %><% if(done[ii]) { %></s><% } %></td>
+                    <td><input type="checkbox" name="del" value="<%= num[ii] %>" /></td>
+                    <td><input type="checkbox" name="done" value="<%= num[ii] %>" /></td>
+                </tr>
+                <% } %>
+            </ul>
+
+            <button type="submit" name="del">UPDATE</button>
+            <% } %>
+
+        </form>
+    </div>
+</body>
+
+</html>
