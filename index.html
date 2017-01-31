@@ -4,7 +4,14 @@
     </head>
     
     <body>
-        <input type="text" name="todo" />
-        <button type="submit" name="add">ADD</button>
+        <form action="/todo" method="post">
+            <input type="text" name="todoItem" />
+            <button type="submit" name="add">ADD</button>
+        </form>
+
+        <form action="/del" method="post">
+            <input type="text" name="itemNum" placeholder="Delete item number..." />
+            <button type="submit" name="del">DELETE</button>
+        </form>
     </body>
 </html>
