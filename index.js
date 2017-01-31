@@ -9,7 +9,7 @@ var app = express();
 var todos = db.addCollection('todos');
 var listCount = 0;
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.locals.pagetitle = "YATDA!";
 app.get("/", function (req, res) {
