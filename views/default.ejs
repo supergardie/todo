@@ -13,19 +13,18 @@
         
     <div class="container">
 
+        <div class="header">
+            <div class="cell"><h1>To Do</h1></div>
+            <div class="cell"><i class="material-icons">done</i></div>
+            <div class="cell"><i class="material-icons">clear</i></div>
+        </div>
+
         <form action="/todo" method="post">
             <input type="text" name="todoItem" />
             <button type="submit" name="add">ADD</button>
         </form>
 
         <form action="/edit" method="post">
-
-
-            <div class="header">
-                <div class="cell"><h1>To Do</h1></div>
-                <div class="cell"><i class="material-icons">done</i></div>
-                <div class="cell"><i class="material-icons">clear</i></div>
-            </div>
 
             <% if(items.length) { %>
             <div class="todos">
