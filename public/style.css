@@ -114,7 +114,9 @@ button {
 	background-color: #ffbb99;
 	border: 1px solid #ffbb99;
 
-	transition: .2s
+	transition: .2s;
+
+	cursor: pointer;
 }
 
 	button:hover {

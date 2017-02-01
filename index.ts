@@ -5,11 +5,15 @@ const loki = require('lokijs')
 
 
 
-const db = new loki('todo.db');
+const db = new loki('todo.json');
+
 const index = path.join(__dirname + "/index.html");
 const app = express();
 
-var todos = db.addCollection('todos');
+var todos = db.getCollection('todos');
+if(!todos) {
+    todos = db.addCollection('todos');
+}
 
 //different file with function 
 /**
@@ -41,30 +45,16 @@ app.post("/todo", function(req, res, next) {
 
     //Todo validation
     addItems(item, todos);
+    db.saveDatabase();
 
     next();
 }, Render);
 
 
-// app.get("/edit", function(req, res, next) {
-//     console.log(req);
-//     if(req.body.del) {
-//         let numDel = req.body.del;
-//         deleteItems(numDel, todos);
-//     }
-
-//     if(req.body.done) {
-//         let numDone = req.body.done;      
-//         editItems(numDone, todos);
-//     }
-
-//     next();
-// },Render);
-
-
 app.get("/del/:num", function(req, res, next) {
     let numDel = req.params.num;
     deleteItems(numDel, todos);
+    db.saveDatabase();
 
     next();
 },Render);
@@ -72,6 +62,7 @@ app.get("/del/:num", function(req, res, next) {
 app.get("/done/:num", function(req, res, next) {
     let numDone = req.params.num;
     editItems(numDone, todos);
+    db.saveDatabase();
 
     next();
 },Render);

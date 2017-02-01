@@ -3,10 +3,13 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var loki = require('lokijs');
-var db = new loki('todo.db');
+var db = new loki('todo.json');
 var index = path.join(__dirname + "/index.html");
 var app = express();
-var todos = db.addCollection('todos');
+var todos = db.getCollection('todos');
+if (!todos) {
+    todos = db.addCollection('todos');
+}
 //different file with function 
 /**
  * function autoid_generator;
@@ -27,28 +30,19 @@ app.post("/todo", function (req, res, next) {
     var item = req.body.todoItem;
     //Todo validation
     addItems(item, todos);
+    db.saveDatabase();
     next();
 }, Render);
-// app.get("/edit", function(req, res, next) {
-//     console.log(req);
-//     if(req.body.del) {
-//         let numDel = req.body.del;
-//         deleteItems(numDel, todos);
-//     }
-//     if(req.body.done) {
-//         let numDone = req.body.done;      
-//         editItems(numDone, todos);
-//     }
-//     next();
-// },Render);
 app.get("/del/:num", function (req, res, next) {
     var numDel = req.params.num;
     deleteItems(numDel, todos);
+    db.saveDatabase();
     next();
 }, Render);
 app.get("/done/:num", function (req, res, next) {
     var numDone = req.params.num;
     editItems(numDone, todos);
+    db.saveDatabase();
     next();
 }, Render);
 var server = app.listen(3000, function () {
