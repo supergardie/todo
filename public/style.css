@@ -1,12 +1,83 @@
-div {
+body {
+}
+
+div.container {
+	padding-top: 50px;
     margin: auto;
     text-align: center;
+    width: 40%;
+    height: 90vh;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
-body {
-    background-color: red;
+div.header {
+	padding: none;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	align-items: baseline;
 }
 
-table {
-    margin: auto;
+div.header div.cell {
+	/*align-self: flex-end;*/
+	padding: 0px 20px 0px 20px;
+	text-align: center;
+}
+
+.material-icons { 
+	font-size: 24px;
+	text-align: center;
+}
+
+div.todos {
+    overflow-y: auto;
+    height: 65vh;
+}
+
+div.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	background-color: #e6e6ff;
+}
+
+div.row:nth-child(even) {
+	background-color: #ccccff;
+}
+
+div.cell {
+	padding: 15px;
+	font-size: 20px;
+	text-align: center;
+}
+
+div.cell:first-child {
+	flex-grow: 3;
+	text-align: left;
+}
+
+div.bottom {
+	padding: 0;
+}
+
+input[type=text] {
+	width: 75%;
+	height: 50px;
+}
+
+button {
+	width: 24%;
+	height: 50px;
+}
+
+div.bottom button {
+	width: 100%;
+}
+
+h1 {
+	padding: 0;
+	margin: 0;
 }

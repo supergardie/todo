@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <title><%= pagetitle %></title>
 </head>
 
 <body class="<%= title %>">    
         
-    <div>
-        <h1><%= title %></h1>
+    <div class="container">
 
         <form action="/todo" method="post">
             <input type="text" name="todoItem" />
@@ -19,26 +20,36 @@
 
         <form action="/edit" method="post">
 
+
+            <div class="header">
+                <div class="cell"><h1>To Do</h1></div>
+                <div class="cell"><i class="material-icons">done</i></div>
+                <div class="cell"><i class="material-icons">clear</i></div>
+            </div>
+
             <% if(items.length) { %>
-            <table>
-                <tr>
-                    <th>TO DO</th>
-                    <th>DEL</th>
-                    <th>DONE</th>
-                </tr>
+            <div class="todos">
 
                 <% for(var ii = 0; ii < items.length; ii++) { %>
-                <tr>
-                    <td><% if(done[ii]) { %><s><% } %><%= items[ii] %><% if(done[ii]) { %></s><% } %></td>
-                    <td><input type="checkbox" name="del" value="<%= num[ii] %>" /></td>
-                    <td><input type="checkbox" name="done" value="<%= num[ii] %>" /></td>
-                </tr>
+                <div class="row">
+                    <div class="cell">
+                        <% if(done[ii]) { %><s><% } %><%= items[ii] %><% if(done[ii]) { %></s><% } %>
+                    </div>
+                    <div class="cell">
+                        <input type="checkbox" name="done" value="<%= num[ii] %>" />
+                    </div>
+                    <div class="cell">
+                        <input type="checkbox" name="del" value="<%= num[ii] %>" />
+                    </div>
+                </div>
                 <% } %>
-            </ul>
 
-            <button type="submit" name="del">UPDATE</button>
+            </div>
             <% } %>
-
+            
+            <div class="bottom">
+                <button type="submit" name="del">UPDATE</button>
+            </div>
         </form>
     </div>
 </body>
