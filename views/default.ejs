@@ -18,8 +18,10 @@
         </div>-->
 
         <form action="/todo" method="post">
-            <input type="text" name="todoItem" placeholder="What do you need to do?" />
-            <button type="submit" name="add">ADD</button>
+            <div class="row">
+                <input type="text" name="todoItem" placeholder="What do you need to do?" />
+                <button type="submit" name="add">ADD</button>
+            </div>
         </form>
 
         <% if(items.length) { %>

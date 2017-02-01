@@ -22,6 +22,15 @@ div.container {
     flex-direction: column;
 }
 
+form div.row {
+	background: none;
+	justify-content: space-between;
+}
+
+form div.row:hover {
+	background: none;
+}
+
 div.header {
 	display: block;
 	
@@ -44,8 +53,12 @@ div.todos {
 div.row {
 	display: flex;
 	flex-direction: row;
+
 	width: 100%;
+	
 	background-color: #e6e6ff;
+	border-bottom: 1px dotted #aaa;
+	
 	transition: .2s;
 }
 
@@ -53,8 +66,13 @@ div.row {
 		background-color: #ccccff;
 	}
 
+	div.row:last-child {
+		border: none;
+	}
+
 	div.row:hover {
 		background-color: #9999ff;
+		color: #fff;
 	}
 
 
@@ -73,10 +91,11 @@ div.cell {
 
 
 input[type=text] {
-	width: 75%;
+	width: 74%;
 	height: 50px;
 
 	font-size: 24px;
+	color: #ffbb99;
 
 	outline: none;
 	border: none;
@@ -84,18 +103,14 @@ input[type=text] {
 	border-bottom: 2px dotted #ffbb99;
 }
 
-	::-moz-placeholder {
-		color: #ffbb99;
-	}
-
 
 
 button {
-	font-size: 16px;
 	width: 24%;
-	height: 50px;
 
-	color: #72728F;
+	font-size: 16px;
+	color: #e64900;
+
 	background-color: #ffbb99;
 	border: 1px solid #ffbb99;
 
@@ -119,7 +134,7 @@ div.todos::-webkit-scrollbar {
 }
 
 	div.todos::-webkit-scrollbar-track {
-		background-color: #fff;
+		background-color: #ffeee6;
 	}
 	
 	div.todos::-webkit-scrollbar-thumb {
