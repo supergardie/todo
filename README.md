@@ -1,1 +1,1 @@
-# todo
+Just for practice. Standard, super basic to do.
