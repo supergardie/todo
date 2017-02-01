@@ -1,44 +1,45 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito|Raleway');
 
-body {
+* {
 	font-family: 'Raleway';
+}
+body {
 	background-image: url("/bg.png");
+	/*overflow-y: hidden;*/
 }
 
 div.container {
-	padding-top: 50px;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
     margin: auto;
+
     text-align: center;
+
     width: 40%;
     height: 90vh;
+
     display: flex;
     flex-direction: column;
 }
 
 div.header {
+	display: block;
+	
 	padding: none;
-	height: 50px;
-	display: flex;
-	flex-direction: row;
 	width: 100%;
-	align-items: baseline;
 }
 
-div.header div.cell {
-	/*align-self: flex-end;*/
-	padding: 0px 20px 0px 20px;
-	text-align: center;
-}
 
-.material-icons { 
-	font-size: 24px;
-	text-align: center;
-}
 
 div.todos {
     overflow-y: auto;
-    height: 65vh;
 }
+
+	.material-icons { 
+		font-size: 24px;
+		text-align: center;
+	}
+
 
 div.row {
 	display: flex;
@@ -48,13 +49,15 @@ div.row {
 	transition: .2s;
 }
 
-div.row:nth-child(even) {
-	background-color: #ccccff;
-}
+	div.row:nth-child(even) {
+		background-color: #ccccff;
+	}
 
-div.row:hover {
-	background-color: #9999ff;
-}
+	div.row:hover {
+		background-color: #9999ff;
+	}
+
+
 
 div.cell {
 	padding: 15px;
@@ -62,14 +65,12 @@ div.cell {
 	text-align: center;
 }
 
-div.cell:first-child {
-	flex-grow: 3;
-	text-align: left;
-}
+	div.cell:first-child {
+		flex-grow: 3;
+		text-align: left;
+	}
 
-div.bottom {
-	padding: 0;
-}
+
 
 input[type=text] {
 	width: 75%;
@@ -83,31 +84,57 @@ input[type=text] {
 	border-bottom: 2px dotted #ffbb99;
 }
 
-::-moz-placeholder {
-	color: #ffbb99;
-}
+	::-moz-placeholder {
+		color: #ffbb99;
+	}
+
+
 
 button {
 	font-size: 16px;
 	width: 24%;
 	height: 50px;
 
+	color: #72728F;
 	background-color: #ffbb99;
 	border: 1px solid #ffbb99;
 
 	transition: .2s
 }
 
-button:hover {
-	background-color: #ff9966;
-}
+	button:hover {
+		background-color: #ff9966;
+	}
 
-div.bottom button {
-	width: 100%;
-}
+
 
 h1 {
-	padding: 0;
-	margin: 0;
 	color: #72728F;
 }
+
+
+
+div.todos::-webkit-scrollbar {
+    width: .5em;
+}
+
+	div.todos::-webkit-scrollbar-track {
+		background-color: #fff;
+	}
+	
+	div.todos::-webkit-scrollbar-thumb {
+	background-color: #ffbb99;
+	outline: 1px solid #ffbb99;
+	}
+
+
+
+a:link, a:visited, a:active {
+	text-decoration: none;
+	transition: .2s;
+	color: #72728F;
+}
+
+	a:hover {
+		color: #fff;
+	}

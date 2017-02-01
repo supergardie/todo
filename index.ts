@@ -1,76 +1,101 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as path from "path";
-const loki = require('lokijs');
+const loki = require('lokijs')
+
+
 
 const db = new loki('todo.db');
 const index = path.join(__dirname + "/index.html");
 const app = express();
 
 var todos = db.addCollection('todos');
+
+//different file with function 
+/**
+ * function autoid_generator;
+ */
+
 var listCount = 0;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+
+/**
+ * Store configs in different file and folder
+ * 
+ */
 app.set('view engine', 'ejs');
 app.locals.pagetitle = "YATDA!";
 
 
 
-app.get("/", function(req, res) {
-    res.render('default', {
-        title: "To Do...",
-        items: retrieveItemNames(),
-        num: retrieveItemNumbers(),
-        done: retrieveStatus()
-    });
-});
+app.get("/", function(req, res, next) {
+    next();
+}, Render);
 
 
-app.post("/todo", function(req, res) {
+app.post("/todo", function(req, res, next) {
     let item = req.body.todoItem;
-    addItems(item);
 
-    res.render('default', {
-        title: "To Do...",
-        items: retrieveItemNames(),
-        num: retrieveItemNumbers(),
-        done: retrieveStatus()
-    });
-});
+    //Todo validation
+    addItems(item, todos);
+
+    next();
+}, Render);
 
 
-app.post("/edit", function(req, res) {
-    if(req.body.del) {
-        let numDel = req.body.del;
-        deleteItems(numDel);
-    }
+// app.get("/edit", function(req, res, next) {
+//     console.log(req);
+//     if(req.body.del) {
+//         let numDel = req.body.del;
+//         deleteItems(numDel, todos);
+//     }
 
-    if(req.body.done) {
-        let numDone = req.body.done;      
-        editItems(numDone);
-    }
+//     if(req.body.done) {
+//         let numDone = req.body.done;      
+//         editItems(numDone, todos);
+//     }
 
-    res.render('default', {
-        title: "To Do...",
-        items: retrieveItemNames(),
-        num: retrieveItemNumbers(),
-        done: retrieveStatus()
-    });
-});
+//     next();
+// },Render);
 
 
-app.listen(3000, function() {
+app.get("/del/:num", function(req, res, next) {
+    let numDel = req.params.num;
+    deleteItems(numDel, todos);
+
+    next();
+},Render);
+
+app.get("/done/:num", function(req, res, next) {
+    let numDone = req.params.num;
+    editItems(numDone, todos);
+
+    next();
+},Render);
+
+const server = app.listen(3000, function() {
     console.log("Listening on port 3000");
 });
 
 
+process.on("uncaughtError",function(){
+    server.close(()=>process.exit());
+});
 
-let retrieveItemNames = function() {
+
+
+/**********************************
+ * HERE THERE BE FUNCTIONS, ARRRR *
+ **********************************/
+
+function retrieveItemNames(todo) {
     let printItem;
     let listItems = [];
     for(var ii = 0; ii < listCount; ii++) {
-        printItem = todos.findOne({num: ii});
+        printItem = todo.findOne({num: ii});
         if(printItem) {
             listItems.push(printItem.listItem);
         }
@@ -79,11 +104,11 @@ let retrieveItemNames = function() {
     return listItems;
 }
 
-let retrieveItemNumbers = function() {
+function retrieveItemNumbers(todo) {
     let list;
     let listNums = [];
     for(var ii = 0; ii < listCount; ii++) {
-        list = todos.findOne({num: ii});
+        list = todo.findOne({num: ii});
         if(list) {
             listNums.push(list.num);
         }
@@ -92,11 +117,12 @@ let retrieveItemNumbers = function() {
     return listNums;
 }
 
-let retrieveStatus = function() {
+
+function retrieveStatus(todo) {
     let list;
     let listStats = [];
     for(var ii = 0; ii < listCount; ii++) {
-        list = todos.findOne({num: ii});
+        list = todo.findOne({num: ii});
         if(list) {
             listStats.push(list.done);
         }
@@ -106,43 +132,47 @@ let retrieveStatus = function() {
 }
 
 
-let deleteItems = function(item) {
-    if(item.length > 1) {
-        item.map(number => {
-            if(number) {
-                number = parseInt(number);
-                todos.remove(todos.findOne({num: number}));
-            }
-        });
+function deleteItems(item, todo) {
+    item = parseInt(item);
+    todo.remove(todo.findOne({num: item}));
+}
+
+
+function addItems(item, todo) {
+    if(validate(item)) {
+        return todo.insert({num: listCount++, listItem: item, done: false});    
     } else {
-        item = parseInt(item);
-        todos.remove(todos.findOne({num: item}));
+        return null;
     }
 }
 
-
-let addItems = function(item) {
-    todos.insert({num: listCount++, listItem: item, done: false});    
-}
-
-let editItems = function(item) {
+function editItems(item, todo) {
     let edit;
 
+    item = parseInt(item);
+
+    edit = todo.findOne({num: item});
+    edit.done = !edit.done;
+
+    todo.update(edit);
+}
+
+
+function Render(req,res){
+    res.render('default', {
+        title: "To Do...",
+        items: retrieveItemNames(todos),
+        num: retrieveItemNumbers(todos),
+        done: retrieveStatus(todos)
+    });
+}
+
+
+function validate(item) {
+    let valid = false;
     if(item.length > 1) {
-        item.map(number => {
-            number = parseInt(number);
-
-            edit = todos.findOne({num: number});
-            edit.done = true;
-
-            todos.update(edit);            
-        });
-    } else {
-        item = parseInt(item);
-
-        edit = todos.findOne({num: item});
-        edit.done = true;
-
-        todos.update(edit);
+        valid = true;
     }
+
+    return valid;
 }
