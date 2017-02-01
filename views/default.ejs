@@ -15,12 +15,12 @@
 
         <div class="header">
             <div class="cell"><h1>To Do</h1></div>
-            <div class="cell"><i class="material-icons">done</i></div>
-            <div class="cell"><i class="material-icons">clear</i></div>
+            <div class="cell"><i class="material-icons" title="Done">done</i></div>
+            <div class="cell"><i class="material-icons" title="Delete">clear</i></div>
         </div>
 
         <form action="/todo" method="post">
-            <input type="text" name="todoItem" />
+            <input type="text" name="todoItem" placeholder="What do you need to do?" />
             <button type="submit" name="add">ADD</button>
         </form>
 
@@ -35,10 +35,10 @@
                         <% if(done[ii]) { %><s><% } %><%= items[ii] %><% if(done[ii]) { %></s><% } %>
                     </div>
                     <div class="cell">
-                        <input type="checkbox" name="done" value="<%= num[ii] %>" />
+                        <input type="checkbox" name="done" value="<%= num[ii] %>" title="Done" />
                     </div>
                     <div class="cell">
-                        <input type="checkbox" name="del" value="<%= num[ii] %>" />
+                        <input type="checkbox" name="del" value="<%= num[ii] %>" title="Delete" />
                     </div>
                 </div>
                 <% } %>

@@ -83,6 +83,10 @@ input[type=text] {
 	border-bottom: 2px dotted #ffbb99;
 }
 
+::-moz-placeholder {
+	color: #ffbb99;
+}
+
 button {
 	font-size: 16px;
 	width: 24%;
@@ -105,4 +109,5 @@ div.bottom button {
 h1 {
 	padding: 0;
 	margin: 0;
+	color: #72728F;
 }
