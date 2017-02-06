@@ -5,9 +5,29 @@ export class ToDo {
     private count;
 
     constructor() {
-        let db = new loki('todo.json');
-        this.todos = db.addCollection('todos');
-        this.count = 0;
+        let db = new loki('todo.json', {
+            autosave: true,
+            autosaveInterval: 30 * 1000,
+            autoload: true
+        });
+        
+        try {
+
+            // db.loadDatabase({}, function (result) {
+            //     console.log(result);
+            //     // put your log call here.
+            //     alert(db.getCollection("SampleCollection"));
+            // });
+
+            this.todos = db.getCollection('todos');
+            // this.count = this.todos.length;
+            console.log("LOADED");
+        } catch(e) {
+            console.log("NOPE");
+            console.log(e.message);
+            this.todos = db.addCollection('todos');
+            this.count = 0;
+        }
     }
 
     get Todos() {

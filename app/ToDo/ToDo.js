@@ -2,9 +2,23 @@
 var loki = require("lokijs");
 var ToDo = (function () {
     function ToDo() {
-        var db = new loki('todo.json');
-        this.todos = db.addCollection('todos');
-        this.count = 0;
+        var db = new loki('todo.json', {
+            autosave: true,
+            autosaveInterval: 30 * 1000,
+            autoload: true
+        });
+        try {
+            this.todos = db.getCollection('todos');
+            console.log(this.todos);
+            // this.count = this.todos.length;
+            console.log("LOADED");
+        }
+        catch (e) {
+            console.log("NOPE");
+            console.log(e.message);
+            this.todos = db.addCollection('todos');
+            this.count = 0;
+        }
     }
     Object.defineProperty(ToDo.prototype, "Todos", {
         get: function () {
